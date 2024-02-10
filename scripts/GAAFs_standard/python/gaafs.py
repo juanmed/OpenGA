@@ -66,7 +66,7 @@ mu      = 1e-9 # AF Step size
 sigma2v = 1e-15 # Variance of measurement noise
 sigma2q = 0 # Variance of random-walk noise
 corr_input = 0 # Level of correlation between input's entries.
-BINARY  = 'GA-LMS_rotors_linpred' # Note that you can call any of the following binaries:
+BINARY  = 'GA-LMS' # Note that you can call any of the following binaries:
 		   # GA-LMS --> Complete subalgebra of R^3
 		   # GA-LMS_rotors --> Even subalgebra of R^3 (isomorphic to quaternions)
 		   # GA-LMS_complex --> Even subalgebra of R^2 (isomorphic to complex numbers)
@@ -111,9 +111,9 @@ plt.xlabel('Iterations')
 plt.plot(data1_dB, label = 'MSE_galms')
 plt.plot(data2_dB, label = 'MSE_theory')
 plt.legend()
-#plt.savefig('MSE.png', bbox_inches='tight')
+plt.savefig('MSE.png', bbox_inches='tight')
 pp.savefig()
-#plt.show()
+plt.show()
 plt.close()
 
 # Load files EMSE_galms.out and EMSE_theory.out to plot EMSE learning curve and theoretical curve:
@@ -143,9 +143,9 @@ plt.xlabel('Iterations')
 plt.plot(data1_dB, label = 'EMSE_galms', color = 'r')
 plt.plot(data2_dB, label = 'EMSE_theory', color = 'magenta')
 plt.legend()
-#plt.savefig('EMSE.png', bbox_inches='tight')
+plt.savefig('EMSE.png', bbox_inches='tight')
 pp.savefig()
-#plt.show()
+plt.show()
 
 plt.close()
 
@@ -153,57 +153,57 @@ plt.close()
 
 # Comparison d versus y
 import pandas as pd
-df = pd.read_csv('/home/openga/data/NASA-GRIP/GRIP-MMS/NASA_GRIP_MMS.csv')
-colors = ['orange', 'blue', 'green', 'black']
-blades = [0, 3, 5, 6]
-# cols = ['mock', 'ROLL', 'PIT', 'YAW']
-cols = ['Q', 'U', 'V', 'W']
-dic = dict(zip(blades, cols))
+# df = pd.read_csv('/home/openga/data/NASA-GRIP/GRIP-MMS/NASA_GRIP_MMS.csv')
+# colors = ['orange', 'blue', 'green', 'black']
+# blades = [0, 3, 5, 6]
+# # cols = ['mock', 'ROLL', 'PIT', 'YAW']
+# cols = ['Q', 'U', 'V', 'W']
+# dic = dict(zip(blades, cols))
 
-plt.figure(figsize=(13.69,8.27))
-plt.title('y curves - {}, mu={}, sigma2v={}, sigma2q={}, corr_input={}'.format(BINARY,
-          mu, sigma2v, sigma2q, corr_input), fontsize=9)
-plt.ylabel('Coefficients')
-plt.xlabel('Iterations')
-for i in range(1):
-    f1 = open('y_galms_{}.out'.format(blades[i]), 'r')
-    data_label1 = ['y_galms_{}'.format(blades[i])]
-    data1_list = []
-    for line in f1:
-        data1_list.append(line.rstrip('\n'))
-    data1 = [float(j) for j in data1_list] # Converts to float
-    plt.scatter(range(len(data1)), df[dic[blades[i]]].values[:len(data1)], label = 'y_galms_{}_{}'.format(blades[i], dic[blades[i]]), color=colors[i], s=3)
-    # plt.plot(df[dic[blades[i]]].values[:len(data1)], label = 'y_galms_{}_{}'.format(blades[i], dic[blades[i]]), color=colors[i], linewidth=3)
-    plt.plot(data1[3:], label = 'y_galms_{}_pred'.format(blades[i]), linestyle='--', color='magenta', linewidth=2)
-plt.legend(loc='upper left')
+# plt.figure(figsize=(13.69,8.27))
+# plt.title('y curves - {}, mu={}, sigma2v={}, sigma2q={}, corr_input={}'.format(BINARY,
+#           mu, sigma2v, sigma2q, corr_input), fontsize=9)
+# plt.ylabel('Coefficients')
+# plt.xlabel('Iterations')
+# for i in range(1):
+#     f1 = open('y_galms_{}.out'.format(blades[i]), 'r')
+#     data_label1 = ['y_galms_{}'.format(blades[i])]
+#     data1_list = []
+#     for line in f1:
+#         data1_list.append(line.rstrip('\n'))
+#     data1 = [float(j) for j in data1_list] # Converts to float
+#     plt.scatter(range(len(data1)), df[dic[blades[i]]].values[:len(data1)], label = 'y_galms_{}_{}'.format(blades[i], dic[blades[i]]), color=colors[i], s=3)
+#     # plt.plot(df[dic[blades[i]]].values[:len(data1)], label = 'y_galms_{}_{}'.format(blades[i], dic[blades[i]]), color=colors[i], linewidth=3)
+#     plt.plot(data1[3:], label = 'y_galms_{}_pred'.format(blades[i]), linestyle='--', color='magenta', linewidth=2)
+# plt.legend(loc='upper left')
+# # plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+# #            ncol=2, mode="expand", borderaxespad=0.)
+# # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+# #plt.savefig('EMSE.png', bbox_inches='tight')
+# pp.savefig()
+# plt.close()
+
+
+# plt.figure(figsize=(13.69,8.27))
+# plt.title('y curves - {}, mu={}, sigma2v={}, sigma2q={}, corr_input={}'.format(BINARY,
+#           mu, sigma2v, sigma2q, corr_input), fontsize=9)
+# plt.ylabel('Coefficients')
+# plt.xlabel('Iterations')
+# for i in range(1, len(blades)):
+#     f1 = open('y_galms_{}.out'.format(blades[i]), 'r')
+#     data_label1 = ['y_galms_{}'.format(blades[i])]
+#     data1_list = []
+#     for line in f1:
+#         data1_list.append(line.rstrip('\n'))
+#     data1 = [float(j) for j in data1_list] # Converts to float
+#     plt.scatter(range(len(data1)), df[dic[blades[i]]].values[:len(data1)], label = 'y_galms_{}_{}'.format(blades[i], dic[blades[i]]), color=colors[i], s=3)
+#     # plt.plot(df[dic[blades[i]]].values[:len(data1)], label = 'y_galms_{}_{}'.format(blades[i], dic[blades[i]]), color=colors[i], linestyle=None, marker='.')
+#     plt.plot(data1[3:], label = 'y_galms_{}_pred'.format(blades[i]), linestyle='--', color='magenta', linewidth=2)
+# # plt.legend()
+# # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 # plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
 #            ncol=2, mode="expand", borderaxespad=0.)
-# plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-#plt.savefig('EMSE.png', bbox_inches='tight')
-pp.savefig()
-plt.close()
-
-
-plt.figure(figsize=(13.69,8.27))
-plt.title('y curves - {}, mu={}, sigma2v={}, sigma2q={}, corr_input={}'.format(BINARY,
-          mu, sigma2v, sigma2q, corr_input), fontsize=9)
-plt.ylabel('Coefficients')
-plt.xlabel('Iterations')
-for i in range(1, len(blades)):
-    f1 = open('y_galms_{}.out'.format(blades[i]), 'r')
-    data_label1 = ['y_galms_{}'.format(blades[i])]
-    data1_list = []
-    for line in f1:
-        data1_list.append(line.rstrip('\n'))
-    data1 = [float(j) for j in data1_list] # Converts to float
-    plt.scatter(range(len(data1)), df[dic[blades[i]]].values[:len(data1)], label = 'y_galms_{}_{}'.format(blades[i], dic[blades[i]]), color=colors[i], s=3)
-    # plt.plot(df[dic[blades[i]]].values[:len(data1)], label = 'y_galms_{}_{}'.format(blades[i], dic[blades[i]]), color=colors[i], linestyle=None, marker='.')
-    plt.plot(data1[3:], label = 'y_galms_{}_pred'.format(blades[i]), linestyle='--', color='magenta', linewidth=2)
-# plt.legend()
-# plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
-           ncol=2, mode="expand", borderaxespad=0.)
-#plt.savefig('EMSE.png', bbox_inches='tight')
-pp.savefig()
-plt.close()
-pp.close()
+# #plt.savefig('EMSE.png', bbox_inches='tight')
+# pp.savefig()
+# plt.close()
+# pp.close()

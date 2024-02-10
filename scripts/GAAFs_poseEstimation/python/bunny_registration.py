@@ -3,7 +3,9 @@ import pickle
 import pandas as pd
 import sys, string, os
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 from math import log
 # from mpl_toolkits.mplot3d import Axes3D
 # from matplotlib.backends.backend_pdf import PdfPages
@@ -47,7 +49,7 @@ if __name__ == '__main__':
     correspondences = '../../../data/bunny/cleanedCorrs.txt'
     correspondences_for_error = '../../../data/bunny/good_correspondences.txt'
 
-    mu_values = 8;
+    mu_values = 8
     mu_steep = mu_values/4; # It has to be 1/4 of the mu_values according to the steepest-descent update rule (Eq. (12) in the paper).
 
     # Load keypoint PCDs
@@ -68,13 +70,14 @@ if __name__ == '__main__':
     pickle.dump(sourceKps_reg, open("sourceKps_reg.p", "wb"))
 
     # Plot
-    # fig = plt.figure()
-    # ax = fig.add_subplot(111, projection='3d')
-    # ax.scatter(sourceKps['x'], sourceKps['y'], sourceKps['z'], color='blue')
-    # ax.scatter(targetKps['x'], targetKps['y'], targetKps['z'], color='red')
-    # ax.scatter(S_reg['x'], S_reg['y'], S_reg['z'], color='green')
-    # # plt.show()
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(sourceKps['x'], sourceKps['y'], color='blue')
+    ax.scatter(targetKps['x'], targetKps['y'], color='red')
+    #ax.scatter(S_reg['x'], S_reg['y'], S_reg['z'], color='green')
+    plt.savefig('bunny.png', bbox_inches='tight')
+    #plt.show()
     # pp.savefig()
-    # #plt.show()
-    # plt.close()
+    #plt.show()
+    #plt.close()
     # pp.close()
